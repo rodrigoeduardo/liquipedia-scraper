@@ -1,0 +1,19 @@
+{
+  "name": "web-scraping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^13.5.1",
+    "ts-node": "^10.7.0",
+    "ts-node-dev": "^1.1.8"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}
