@@ -15,6 +15,8 @@ let playerPhoto = '';
 let playersPhoto: any[] = [];
 
 (async () => {
+  console.log('Starting... 🚀');
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(liquipediaURL);
@@ -24,23 +26,23 @@ let playersPhoto: any[] = [];
     (elements: any) => elements.map((element: any) => element.text)
   );
 
-  console.log('Nomes dos jogadores encontrados.');
+  console.log('✅: Player names found.');
 
   const playersLink = await page.$$eval(
     '.wikitable > tbody > tr:first-child > th > span:last-child > a',
     (elements: any) => elements.map((element: any) => element.href)
   );
 
-  console.log('Links dos jogadores encontrados.');
+  console.log('✅: Player links found.');
 
   const playersNationality = await page.$$eval(
     '.wikitable > tbody > tr:first-child > th > span:last-child > .flag > a',
     (elements: any) => elements.map((element: any) => element.title)
   );
 
-  console.log('Nacionalidades dos jogadores encontrados.');
+  console.log('✅: Player nationalities found.');
 
-  console.log('Começando procura pelas fotos dos jogadores.');
+  console.log('✅: Starting to get player photos...');
 
   const page2 = await browser.newPage();
 
@@ -53,14 +55,14 @@ let playersPhoto: any[] = [];
         (element: any) => element.src
       );
     } catch (err) {
-      console.log('Não foi possível encontrar a foto do jogador.');
+      console.log('❌: Player photo not found. Player: ' + playersName[i]);
       playerPhoto = '';
     }
 
     playersPhoto.push(playerPhoto);
   }
 
-  console.log('Fotos dos jogadores encontrados.');
+  console.log('✅: Player photos found.');
 
   await browser.close();
 
@@ -78,8 +80,10 @@ let playersPhoto: any[] = [];
     './output/players-v02.json',
     JSON.stringify(players, null, 2),
     (err: any) => {
-      if (err) throw new Error('Ocorreu algum erro na escrita dos dados.');
-      console.log('Os dados foram escritos para o arquivo players02.json');
+      if (err) throw new Error('❌: Error writing file.');
+      console.log('✅: Players file written.');
     }
   );
+
+  console.log('Ending... 🛑');
 })();
